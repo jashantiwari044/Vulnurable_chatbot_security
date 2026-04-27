@@ -3,7 +3,7 @@
     "Secure-Runtime-Shield": {
       "command": "C:\\Python313\\python.exe",
       "args": [
-        " (path to )bridge.py"
+        "c:\\Users\\kavya\\OneDrive\\Desktop\\keycloak-mcp-server\\bridge.py"
       ],
       "env": {
         "PYTHONUTF8": "1"
@@ -12,7 +12,9 @@
   },
   "preferences": {
     "coworkScheduledTasksEnabled": false,
+    "ccdScheduledTasksEnabled": false,
     "sidebarMode": "chat",
-    "coworkWebSearchEnabled": true
+    "coworkWebSearchEnabled": true,
+    "floatingAtollActive": true
   }
 }

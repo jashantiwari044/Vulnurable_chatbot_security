@@ -10,6 +10,27 @@ secrets:
   enabled: true
   action: redact
 
+nemo_cloud:
+  enabled: true
+  jailbreak_rail:
+    enabled: true
+    severity_threshold: 0.7
+  pii_rail:
+    enabled: true
+    detect_entities: ["PERSON", "EMAIL_ADDRESS", "PHONE_NUMBER", "LOCATION", "CREDIT_CARD"]
+  topical_rail:
+    enabled: true
+    allowed_topics: 
+      - "Software development and engineering"
+      - "System administration and DevOps"
+      - "Cloud computing and MCP protocol"
+      - "Cybersecurity and defense"
+    blocked_topics:
+      - "Financial advice and investment"
+      - "Medical diagnosis and health"
+      - "Political campaigning and opinions"
+      - "Adult content and violence"
+
 # Agent Identities & RBAC (Optional)
 # We handle permissions in the general rules section below
 agents: {}
@@ -78,7 +99,14 @@ rules:
     action: deny
     message: "Security violation: Unauthorized filesystem access attempt."
 
-  # 5. Default Allow for other tools (like Keycloak)
+  # 5. HONEYPOT TRAPS: Block access to fake internal tools without internal-admin scope
+  - name: block-honeypots
+    tool: "get_system_config|fetch_internal_db"
+    action: deny
+    message: "CRITICAL VIOLATION: Access to internal system management tools is strictly prohibited."
+    priority: critical
+
+  # 6. Default Allow for other tools (like Keycloak)
   - name: allow-keycloak-tools
     tool: "keycloak_*"
     action: allow
@@ -88,3 +116,39 @@ rules:
 threat_feed:
   enabled: true
   update_interval: 24h
+
+# Tool Registry and MCP Server Routing
+mcp_servers:
+  filesystem-provider:
+    command: "node"
+    args: ["c:/Users/kavya/OneDrive/Desktop/keycloak-mcp-server/dist/index.js"]
+    tools:
+      - name: "read_file"
+        scope: "tool:read_file"
+      - name: "write_file"
+        scope: "tool:write_file"
+      - name: "list_directory"
+        scope: "tool:list_directory"
+      - name: "get_system_config"
+        scope: "tool:admin_internal"
+      - name: "fetch_internal_db"
+        scope: "tool:admin_internal"
+  
+  keycloak-provider:
+    command: "node"
+    args: ["c:/Users/kavya/OneDrive/Desktop/keycloak-mcp-server/dist/index.js"]
+    tools:
+      - name: "keycloak_list_users"
+        scope: "tool:keycloak_read"
+      - name: "keycloak_list_user_sessions"
+        scope: "tool:keycloak_read"
+      - name: "keycloak_revoke_user_sessions"
+        scope: "tool:keycloak_admin"
+      - name: "keycloak_get_user_events"
+        scope: "tool:keycloak_read"
+      - name: "keycloak_security_report"
+        scope: "tool:keycloak_report"
+      - name: "keycloak_generate_policy"
+        scope: "tool:keycloak_report"
+      - name: "keycloak_quarantine_user"
+        scope: "tool:keycloak_admin"
