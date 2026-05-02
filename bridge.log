@@ -1791,3 +1791,28 @@ er userId or username"}]},"jsonrpc":"2.0","id":6}
 [09:58:18] 🟥 [filesystem-provider] stderr: Keycloak MCP Server running on stdio
 [09:59:13] 📩 Incoming MCP message: notifications/cancelled
 [09:59:13] ⚠️ Request check error: cannot access local variable 'tool_name' where it is not associated with a value
+
+--- Secure Bridge Session Start: 2026-05-02 22:59:43 ---
+[22:59:43] 🪪 SPIFFE integration enabled (startup validation mode).
+[22:59:43] 🪪 Bridge SPIFFE ID: spiffe://runtime-shield/bridge
+[22:59:43] 🪪 Expected MCP Server SPIFFE ID: spiffe://runtime-shield/secure-runtime-shield
+[22:59:43] ✅ SPIFFE SVID found at: c:\Users\kavya\OneDrive\Desktop\keycloak-mcp-server\spire\certs\agent.crt
+[22:59:43] ✅ SPIFFE trust bundle found at: c:\Users\kavya\OneDrive\Desktop\keycloak-mcp-server\spire\certs\ca.crt
+[22:59:43] ⚠️ Current transport is stdio, so this is not full mTLS SPIFFE authentication.
+[22:59:43] ✅ Security Gateway initialized
+[22:59:43] 📦 Loaded 2 MCP providers from config
+[22:59:43] 🛡️ NeMo NIM Guardrails active (Jailbreak: True, PII: True)
+[22:59:43] 🕵️‍♂️ PROTECTION MODE ACTIVE: Fraud Engine will enforce risk limits
+[22:59:43] 📊 Dashboard active at http://127.0.0.1:9090
+[22:59:43] ✅ Schema acquired for Tenant customer-delta-99. Guardrails active.
+[22:59:43] 🚀 Launching MCP Provider [filesystem-provider]: node c:/Users/kavya/OneDrive/Desktop/keycloak-mcp-server/dist/index.js
+[22:59:43] ⚠️ Sandboxing [filesystem-provider]: Skipped (Platform not Linux) - Using restricted execution simulation
+[22:59:43] 🚀 Launching MCP Provider [keycloak-provider]: node c:/Users/kavya/OneDrive/Desktop/keycloak-mcp-server/dist/index.js
+[22:59:44] ⚠️ Sandboxing [keycloak-provider]: Skipped (Platform not Linux) - Using restricted execution simulation
+[22:59:44] ⌛ Multi-MCP Bridge active and relaying...
+[22:59:45] 🟥 [keycloak-provider] stderr: Keycloak MCP Server running on stdio
+[22:59:45] 🟥 [filesystem-provider] stderr: Keycloak MCP Server running on stdio
+[23:05:17] 🏁 Provider filesystem-provider exited with code 1
+stem-provider' exited unexpectedly with code 1.
+[23:05:17] 🔄 SUPERVISOR: In a full implementation, the Controller would respawn this isolated renderer now.
+[23:05:17] 🚨 SUPERVISOR ALERT: Jailed renderer process 'keycloak-provider' exited unexpectedly with code 1.
