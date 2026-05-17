@@ -92,9 +92,17 @@ Runtime-shield-for-agentic-systems/
 ├── audit_agent.py            ← 🕵️ Background AI auditor (uses NVIDIA NIM)
 ├── shield_sdk.py             ← 🔌 Client SDK for customers to integrate
 ├── dashboard_client.py       ← 📊 Multi-tenant dashboard config negotiation
-├── test_stub_execution.py    ← 🧪 Demo of SDK usage
-├── vulnerable_mcp_actions.py ← ⚠️ Intentionally vulnerable server (for testing)
 ├── claude_config.txt         ← 📝 Sample Claude Desktop config
+├── demo/                     ← 📂 Test scripts, demos, and legacy files
+│   ├── demo_chatbot_integration.py
+│   ├── demo_prompts_cheatsheet.md
+│   ├── test_stub_execution.py
+│   ├── vulnerable_mcp_actions.py
+│   ├── check_keycloak.py
+│   ├── fix_keycloak_roles.py
+│   ├── patch_keycloak.py
+│   ├── nsjail_deep_dive.md
+│   └── system_health_check.md
 │
 ├── spire/                    ← 🪪 SPIFFE/SPIRE configuration
 │   ├── server/server.conf    ←    SPIRE Server config
@@ -296,7 +304,7 @@ This shows the full flow: customer calls SDK → SDK wraps in MCP → Bridge ver
 
 ---
 
-### ⚠️ `vulnerable_mcp_actions.py` — Intentionally Vulnerable Server
+### ⚠️ `demo/vulnerable_mcp_actions.py` — Intentionally Vulnerable Server
 
 A **deliberately insecure** MCP server used for security testing/demos. It has:
 - **Path traversal vulnerability** — `get_full_path()` does naive `os.path.join()` without validating the path stays within the workspace
@@ -477,22 +485,54 @@ When a user sends a broad token (access to everything), the bridge exchanges it 
 
 ## 9. How to Run the Project
 
+### On macOS / Linux (Recommended)
+
 ```bash
-# 1. Start infrastructure
+# 1. Start Keycloak + SPIRE Infrastructure
 docker-compose up -d
 
-# 2. Install Node.js dependencies & compile TypeScript
+# 2. Set up Python Virtual Environment (venv) & Install Packages
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+# 3. Install Node.js dependencies and Compile TypeScript
+# (A clean reinstall is recommended on macOS to avoid Gatekeeper / "Operation not permitted" warnings)
+rm -rf node_modules
 npm install
 npm run build
 
-# 3. Run the security bridge
+# 4. Run the security bridge
 python bridge.py
 
-# 4. (Optional) Run the audit agent in a separate terminal
+# 5. (Optional) Run the audit agent in a separate terminal
+# Remember to activate your venv in that terminal first!
 python audit_agent.py
 
-# 5. View the dashboard
+# 6. View the live dashboard
 # Open http://localhost:9090 in your browser
+```
+
+### On Windows
+
+```bash
+# 1. Start Infrastructure
+docker-compose up -d
+
+# 2. Setup Python Virtual Environment (venv) & Install Packages
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+
+# 3. Install Node.js & compile TypeScript
+npm install
+npm run build
+
+# 4. Run the security bridge
+python bridge.py
+
+# 5. (Optional) Run the audit agent
+python audit_agent.py
 ```
 
 ### To use with Claude Desktop:

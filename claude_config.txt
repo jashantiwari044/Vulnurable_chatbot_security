@@ -1,20 +1,14 @@
 {
   "mcpServers": {
     "Secure-Runtime-Shield": {
-      "command": "C:\\Python313\\python.exe",
+      "command": "/Users/jashan/Documents/Runtime-shield- login/Runtime-shield-for-agentic-systems/venv/bin/python",
       "args": [
-        "c:\\Users\\kavya\\OneDrive\\Desktop\\keycloak-mcp-server\\bridge.py"
+        "-u",
+        "/Users/jashan/Documents/Runtime-shield- login/Runtime-shield-for-agentic-systems/bridge.py"
       ],
       "env": {
-        "PYTHONUTF8": "1"
+        "PYTHONIOENCODING": "utf-8"
       }
     }
-  },
-  "preferences": {
-    "coworkScheduledTasksEnabled": false,
-    "ccdScheduledTasksEnabled": false,
-    "sidebarMode": "chat",
-    "coworkWebSearchEnabled": true,
-    "floatingAtollActive": true
   }
 }
